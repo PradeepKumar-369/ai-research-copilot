@@ -1,0 +1,18 @@
+{
+  "name": "Project",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

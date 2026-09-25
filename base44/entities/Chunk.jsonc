@@ -1,0 +1,27 @@
+{
+  "name": "Chunk",
+  "type": "object",
+  "properties": {
+    "paper_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "chunk_index": {
+      "type": "number"
+    },
+    "section": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "paper_id",
+    "project_id",
+    "chunk_index",
+    "text"
+  ]
+}

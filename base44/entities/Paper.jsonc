@@ -1,0 +1,77 @@
+{
+  "name": "Paper",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "file_name": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "year": {
+      "type": "string"
+    },
+    "venue": {
+      "type": "string"
+    },
+    "abstract": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "processing_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "processing_error": {
+      "type": "string"
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "extracted": {
+      "type": "object"
+    },
+    "chunk_count": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "project_id",
+    "file_name",
+    "file_url"
+  ]
+}

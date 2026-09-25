@@ -1,0 +1,30 @@
+{
+  "name": "ChatMessage",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "user",
+        "assistant"
+      ]
+    },
+    "content": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "project_id",
+    "role",
+    "content"
+  ]
+}
