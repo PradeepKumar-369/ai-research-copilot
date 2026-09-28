@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { api } from '@/api/client';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Send, Loader2, MessageSquare } from 'lucide-react';
@@ -20,7 +20,7 @@ export default function ChatTab({ project, papers }) {
   const scrollRef = useRef(null);
 
   const load = async () => {
-    const list = await base44.entities.ChatMessage.filter({ project_id: project.id }, 'created_date', 100);
+    const list = await api.entities.ChatMessage.filter({ project_id: project.id }, 'created_date', 100);
     setMessages(list);
   };
   useEffect(() => { load(); }, [project.id]);
@@ -34,11 +34,11 @@ export default function ChatTab({ project, papers }) {
     setMessages(m => [...m, userMsg]);
     setLoading(true);
     try {
-      await base44.entities.ChatMessage.create({ project_id: project.id, role: 'user', content: q });
-      const res = await base44.functions.invoke('askQuestion', { project_id: project.id, question: q });
+      await api.entities.ChatMessage.create({ project_id: project.id, role: 'user', content: q });
+      const res = await api.functions.invoke('askQuestion', { project_id: project.id, question: q });
       const answer = res.data?.answer || 'No answer returned.';
       const sources = res.data?.sources || [];
-      await base44.entities.ChatMessage.create({ project_id: project.id, role: 'assistant', content: answer, sources });
+      await api.entities.ChatMessage.create({ project_id: project.id, role: 'assistant', content: answer, sources });
       setMessages(m => [...m, { role: 'assistant', content: answer, sources }]);
     } catch (e) {
       const msg = 'Error: ' + (e?.response?.data?.error || e.message);

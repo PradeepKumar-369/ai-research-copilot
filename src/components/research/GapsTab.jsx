@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { api } from '@/api/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Loader2, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
@@ -16,7 +16,7 @@ export default function GapsTab({ project, papers }) {
 
   const load = async () => {
     setLoading(true);
-    const list = await base44.entities.GapCandidate.filter({ project_id: project.id }, '-evidence_strength');
+    const list = await api.entities.GapCandidate.filter({ project_id: project.id }, '-evidence_strength');
     setGaps(list);
     setLoading(false);
   };
@@ -25,7 +25,7 @@ export default function GapsTab({ project, papers }) {
   const discover = async () => {
     setDiscovering(true);
     try {
-      await base44.functions.invoke('discoverGaps', { project_id: project.id });
+      await api.functions.invoke('discoverGaps', { project_id: project.id });
       await load();
       toast({ title: 'Gap discovery complete' });
     } catch (e) {

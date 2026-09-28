@@ -127,7 +127,7 @@ async function invokeAnthropic({ prompt, schema }) {
   return schema ? extractJson(content) : content;
 }
 
-// Mirrors base44's asServiceRole.integrations.Core.InvokeLLM({ prompt, response_json_schema }).
+// Common LLM invocation shape used across the AI-powered routes: a prompt, plus an optional JSON schema for structured output.
 export async function invokeLLM({ prompt, schema }) {
   const provider = getProvider();
   if (!provider) {

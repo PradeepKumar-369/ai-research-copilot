@@ -1,6 +1,4 @@
-// Ported from base44/shared/chunking.ts (kept in sync manually — that file has
-// no TypeScript-specific syntax, so this is a straight copy for use in the
-// local Node backend without a TS loader).
+// Semantic chunking: respects section boundaries, uses overlapping windows.
 export function chunkSections(sections, targetSize = 1000, overlap = 150) {
   const chunks = [];
   let globalIndex = 0;

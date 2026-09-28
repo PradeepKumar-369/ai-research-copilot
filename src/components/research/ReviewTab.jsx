@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { api } from '@/api/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Loader2, FileText, Download, FileDown } from 'lucide-react';
@@ -15,7 +15,7 @@ export default function ReviewTab({ project, papers }) {
   const generate = async () => {
     setLoading(true);
     try {
-      const res = await base44.functions.invoke('generateLiteratureReview', { project_id: project.id });
+      const res = await api.functions.invoke('generateLiteratureReview', { project_id: project.id });
       setReview(res.data?.review || '');
     } catch (e) {
       const message = e?.response?.data?.error || e.message;

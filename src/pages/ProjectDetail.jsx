@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { api } from '@/api/client';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, LayoutDashboard, FileText, GitCompare, Network, Sparkles, MessageSquare, BookOpen } from 'lucide-react';
@@ -20,9 +20,9 @@ export default function ProjectDetail() {
   const [tab, setTab] = useState('overview');
 
   const load = useCallback(async () => {
-    const p = await base44.entities.Project.get(id);
+    const p = await api.entities.Project.get(id);
     setProject(p);
-    const list = await base44.entities.Paper.filter({ project_id: id }, '-created_date');
+    const list = await api.entities.Paper.filter({ project_id: id }, '-created_date');
     setPapers(list);
   }, [id]);
 

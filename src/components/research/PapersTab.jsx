@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { api } from '@/api/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { FileText, UploadCloud, Loader2, RefreshCw, Trash2, Quote } from 'lucide-react';
@@ -29,8 +29,8 @@ export default function PapersTab({ project, papers, reload }) {
     setUploading(true);
     try {
       for (const file of files) {
-        const { file_url } = await base44.integrations.Core.UploadPublicFile({ file });
-        await base44.entities.Paper.create({
+        const { file_url } = await api.integrations.Core.UploadPublicFile({ file });
+        await api.entities.Paper.create({
           project_id: project.id,
           file_name: file.name,
           file_url,
@@ -50,7 +50,7 @@ export default function PapersTab({ project, papers, reload }) {
   const processPaper = async (paper) => {
     setProcessing(paper.id);
     try {
-      await base44.functions.invoke('processPaper', { paper_id: paper.id });
+      await api.functions.invoke('processPaper', { paper_id: paper.id });
       await reload();
       toast({ title: 'Analysis complete', description: `"${paper.title || paper.file_name}" is ready.` });
     } catch (e) {
@@ -64,8 +64,8 @@ export default function PapersTab({ project, papers, reload }) {
     if (!pendingDelete) return;
     setDeleting(true);
     try {
-      await base44.entities.Chunk.deleteMany({ paper_id: pendingDelete.id });
-      await base44.entities.Paper.delete(pendingDelete.id);
+      await api.entities.Chunk.deleteMany({ paper_id: pendingDelete.id });
+      await api.entities.Paper.delete(pendingDelete.id);
       await reload();
       toast({ title: 'Paper removed' });
     } catch (e) {

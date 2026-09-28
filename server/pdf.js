@@ -12,7 +12,7 @@ export async function extractText(buffer) {
   }
 }
 
-// Base44's hosted extraction returns layout-aware sections; without that, we
+// A hosted layout-aware extraction service would return true sections; without one, we
 // approximate by splitting on short lines that look like section headings.
 export function splitSections(text) {
   const lines = text.split(/\r?\n/);

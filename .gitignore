@@ -35,7 +35,6 @@ dist-ssr
 
 .env
 .vite
-base44/.app.jsonc
 
 # Local backend runtime data (not source)
 server/data

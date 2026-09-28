@@ -2,33 +2,22 @@
 
 ## Project Context
 
-This is a Base44 app repository. Treat it as user-owned application code, keep changes focused on the user's request, and preserve existing project conventions.
+AI Research Copilot: a React/Vite frontend backed by a local Node/Express server (`server/`). There is no hosted backend and no external database — entity data lives in JSON files under `server/data/`, uploaded PDFs under `server/uploads/` (both gitignored, created on demand).
 
-Start with `README.md` for local setup, environment variables, and publish workflow.
-
-## Base44 References
-
-- CLI overview: https://docs.base44.com/developers/references/cli/get-started/overview.md
-- Agent skills: https://docs.base44.com/developers/backend/overview/skills.md
-
-If your agent supports Agent Skills, install or update Base44 skills before Base44-specific work:
-
-```bash
-npx skills add base44/skills
-```
+Start with `README.md` for setup, environment variables, and architecture.
 
 ## Key Files
 
 - `src/`: frontend application source.
-- `src/api/base44Client.js`: frontend Base44 SDK client.
-- `vite.config.js`: Vite config and Base44 Vite plugin setup.
-- `.env.local`: local-only environment values; never commit secrets.
+- `src/api/client.js`: frontend API client — talks to the local Express backend over `/api/*` (proxied by Vite in dev).
+- `server/index.js`: backend entry point (auth, entities, functions, uploads).
+- `server/llm.js`: pluggable LLM client (OpenAI / Anthropic / Grok / Groq — auto-detected from whichever key is set in `server/.env`).
+- `server/tfidf.js`: TF-IDF retrieval used by the cross-paper Q&A function.
+- `vite.config.js`: Vite config, including the `@` → `src` path alias and the `/api` dev proxy to the backend.
 
 ## Working Notes
 
-- Use `base44 dev` as the default local development command when you need the local Base44 backend. It can run the backend and frontend together.
-- When docs or code mention the frontend being started automatically, that usually means the Base44 project config includes `site.serveCommand`, for example `"serveCommand": "npm run dev"` in `base44/config.jsonc`.
-- Use `npm run dev` only for frontend-only work against the hosted Base44 backend.
-- Prefer the existing Base44 CLI workflow over adding new npm scripts for Base44-specific tasks.
-- Reuse the existing SDK client and Vite plugin patterns before adding new Base44 integration paths.
-- Run the relevant checks from `package.json` before finishing code changes.
+- Run frontend + backend together with `npm run dev:all`, or separately with `npm run server` and `npm run dev`.
+- The backend only reads `server/.env` at startup — restart it after changing env vars.
+- `npm test` runs the backend's automated tests (Node's built-in test runner) against `server/*.test.js`.
+- Run the relevant checks from `package.json` (`lint`, `typecheck`, `test`) before finishing code changes.

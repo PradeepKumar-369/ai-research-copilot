@@ -1,9 +1,8 @@
-// Local replacement for the @base44/sdk client. Talks to the Express backend
-// in server/ instead of Base44's hosted platform — same call shapes the rest
-// of the app already expects (axios-like .data / .response.data.error),
-// so no other file needs to change.
+// API client for the local Express backend in server/. Call shapes
+// (axios-like .data / .response.data.error) match what the rest of the app
+// expects from entity/function/auth calls.
 const API_BASE = '/api';
-const TOKEN_KEY = 'base44_access_token';
+const TOKEN_KEY = 'app_access_token';
 
 function getToken() {
   try {
@@ -63,7 +62,7 @@ function makeEntity(name) {
   };
 }
 
-export const base44 = {
+export const api = {
   app: {
     getPublicSettings: () => request('/app/public-settings', { auth: false }),
   },

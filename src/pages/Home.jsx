@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { api } from '@/api/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Plus, ArrowRight, FileText, Network, Sparkles, MessageSquare } from 'lucide-react';
@@ -15,14 +15,14 @@ export default function Home() {
 
   const load = async () => {
     setLoading(true);
-    const list = await base44.entities.Project.list('-created_date');
+    const list = await api.entities.Project.list('-created_date');
     setProjects(list);
     setLoading(false);
   };
   useEffect(() => { load(); }, []);
 
   const create = async (data) => {
-    const p = await base44.entities.Project.create(data);
+    const p = await api.entities.Project.create(data);
     setOpen(false);
     nav(`/project/${p.id}`);
   };

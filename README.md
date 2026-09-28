@@ -2,7 +2,7 @@
 
 An evidence-driven research assistant for working through a collection of academic papers: upload PDFs, extract structured data from each one, ask questions across the whole collection, surface research-gap candidates backed by traceable evidence, and generate a themed literature review — not another PDF chatbot.
 
-Originally scaffolded on [Base44](https://base44.com), now a fully self-contained app: a React/Vite frontend backed by a local Node/Express server, with no dependency on any hosted platform.
+A React/Vite frontend backed by a local Node/Express server — fully self-contained, with no dependency on any hosted platform or external database.
 
 ## Features
 
@@ -25,7 +25,6 @@ server/         Local Node/Express backend
   pdf.js          PDF text extraction + section detection
   tfidf.js        TF-IDF retrieval for cross-paper Q&A
   routes/         Entity CRUD, the 4 AI-powered functions, file uploads
-base44/         Original Base44 entity schemas & function specs (kept for reference; no longer used at runtime)
 ```
 
 There is no external database — data lives in JSON files under `server/data/` (gitignored), and uploaded PDFs live under `server/uploads/` (also gitignored). This is intentionally simple for local/demo use; swap `server/store.js` for a real database if you need multi-user persistence.
@@ -93,4 +92,3 @@ Only one provider needs to be configured; `server/llm.js` picks the first one it
 ## Notes
 
 - This is a local-first, single-machine setup meant for development and demos: sessions, uploaded files, and all entity data live on disk next to the code, not in a managed database.
-- The `base44/` folder is retained as a historical reference for the entity schemas and function specs this app was originally built from — it is not read by the app at runtime.
